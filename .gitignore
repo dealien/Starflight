@@ -60,3 +60,6 @@ target/
 # Sublime Text project files
 *.sublime-project
 *.sublime-workspace
+
+# Self-generated files
+logs/

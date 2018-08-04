@@ -69,11 +69,14 @@ def mainMenu():
         print('Shields:   %s%% (%s)' % (shld, shldstatus))
         print('')
         print('Power Levels:')
-        print('Engines:   %s' % engpa)
-        print('Weapons:   %s' % weapa)
-        print('Shields:   %s' % shepa)
-        print('Auxiliary: %s' % auxpa)
-        print('Reserve  : %s' % respa)
+        print('Engines   : %s' % engpa)
+        print('Weapons   : %s' % weapa)
+        print('Shields   : %s' % shepa)
+        print('Auxiliary : %s' % auxpa)
+        print('')
+        print('Reserve   : %s' % respa)
+        print('')
+        print('')
         print('')
         print('1: Power settings')
         if shldstatus is not 'Disabled':
@@ -97,7 +100,7 @@ def power_display():
     weapa = ''
     shepa = ''
     auxpa = ''
-    respa=''
+    respa = ''
     for i in range(engp):
         engpa += '■'
     for i in range(weap):
@@ -127,47 +130,52 @@ def powerMenu():
         print('')
         print('')
         print('Power Levels:')
-        print('Engines:   %s' % engpa)
-        print('Weapons:   %s' % weapa)
-        print('Shields:   %s' % shepa)
-        print('Auxiliary: %s' % auxpa)
-        print('Reserve  : %s' % respa)
+        print('Engines   : %s' % engpa)
+        print('Weapons   : %s' % weapa)
+        print('Shields   : %s' % shepa)
+        print('Auxiliary : %s' % auxpa)
+        print('')
+        print('Reserve   : %s' % respa)
+        print('')
+        print('')
         print('')
         print('1: Increase power to Engines')
-        print('2: Increase power to Engines')
-        print('3: Increase power to Weapons')
-        print('4: Increase power to Weapons')
-        print('5: Increase power to Shields')
-        print('6: Increase power to Shields')
-        print('7: Increase power to Auxiliary')
-        print('8: Increase power to Auxiliary')
+        print('2: Increase power to Weapons')
+        print('3: Increase power to Shields')
+        print('4: Increase power to Auxiliary')
+        print('')
+        print('5: Decrease power to Engines')
+        print('6: Decrease power to Weapons')
+        print('7: Decrease power to Shields')
+        print('8: Decrease power to Auxiliary')
+        print('')
         print('9: Exit menu')
         c = int(msvcrt.getch())
         if c is 1:
             if resp > 0:
                 engp += 1
                 resp -= 1
-        elif c is 2:
+        elif c is 5:
             if engp > 0:
                 resp += 1
                 engp -= 1
-        elif c is 3:
+        elif c is 2:
             if resp > 0:
                 weap += 1
                 resp -= 1
-        elif c is 4:
+        elif c is 6:
             if weap > 0:
                 resp += 1
                 weap -= 1
-        elif c is 5:
+        elif c is 3:
             if resp > 0:
                 shep += 1
                 resp -= 1
-        elif c is 6:
+        elif c is 7:
             if shep > 0:
                 resp += 1
                 shep -= 1
-        elif c is 7:
+        elif c is 4:
             if resp > 0:
                 auxp += 1
                 resp -= 1
