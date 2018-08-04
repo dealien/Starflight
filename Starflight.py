@@ -1,4 +1,6 @@
 import os
+import msvcrt
+from datetime import datetime
 
 hull = 100
 shld = 100
@@ -8,12 +10,31 @@ weap = 3
 shep = 3
 auxp = 3
 resp = 0
-lines = []
 engpa = ''
 weapa = ''
 shepa = ''
 auxpa = ''
 respa = ''
+
+
+def createFolder(directory):
+    try:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+    except OSError:
+        print('Error: Creating directory. ' + directory)
+
+
+def log(c):
+    global logfilename
+    f = open(logfilename, 'a')
+    f.write(str(c) + '\n')
+    f.close()
+
+
+createFolder('./logs/')
+logfilename = './logs/' + datetime.now().strftime('log_%H_%M_%d_%m_%Y.log')
+log('Log beginning ' + str(datetime.now()))
 
 
 def cls():
@@ -27,7 +48,7 @@ def print_menu(lines, min_value, max_value):
         for line in lines:
             print(line)
         try:
-            value = int(input(': '))
+            value = int(msvcrt.getch())
             if value < min_value or value > max_value:
                 value = None
         except ValueError:
@@ -39,46 +60,44 @@ def mainMenu():
     global engp, weap, shep, auxp, resp, engpa, weapa, shepa, auxpa, respa
     while True:
         cls()
-        lines = []
-        engpa = ''
-        weapa = ''
-        shepa = ''
-        auxpa = ''
-        respa = ''
         power_display()
-        lines.append('USS Starflight')
-        lines.append('')
-        lines.append('')
-        lines.append('Ship Status:')
-        lines.append('Hull:      %s%%' % hull)
-        lines.append('Shields:   %s%% (%s)' % (shld, shldstatus))
-        lines.append('')
-        lines.append('Power Levels:')
-        lines.append('Engines:   %s' % engpa)
-        lines.append('Weapons:   %s' % weapa)
-        lines.append('Shields:   %s' % shepa)
-        lines.append('Auxiliary: %s' % auxpa)
-        lines.append('Reserve  : %s' % respa)
-        lines.append('')
-        lines.append('1: Power settings')
+        print('USS Starflight')
+        print('')
+        print('')
+        print('Ship Status:')
+        print('Hull:      %s%%' % hull)
+        print('Shields:   %s%% (%s)' % (shld, shldstatus))
+        print('')
+        print('Power Levels:')
+        print('Engines:   %s' % engpa)
+        print('Weapons:   %s' % weapa)
+        print('Shields:   %s' % shepa)
+        print('Auxiliary: %s' % auxpa)
+        print('Reserve  : %s' % respa)
+        print('')
+        print('1: Power settings')
         if shldstatus is not 'Disabled':
             if shldstatus is 'Raised':
                 i = 'Lower'
             else:
                 i = 'Raise'
-            lines.append('2: %s shields' % i)
-        if shldstatus is not 'Disabled':
-            c = print_menu(lines, 1, 2)
-        else:
-            c = print_menu(lines, 1, 1)
+            print('2: %s shields' % i)
+        # TODO: Add ValueError catch to handle non-numeric keypresses
+        c = int(msvcrt.getch())
+        log(c)
         if c is 1:
             powerMenu()
-        elif c is 2:
+        elif c is 2 and shldstatus is not 'Disabled':
             toggle_shields()
 
 
 def power_display():
     global engp, weap, shep, auxp, resp, engpa, weapa, shepa, auxpa, respa
+    engpa = ''
+    weapa = ''
+    shepa = ''
+    auxpa = ''
+    respa=''
     for i in range(engp):
         engpa += '■'
     for i in range(weap):
@@ -103,32 +122,27 @@ def powerMenu():
     global engp, weap, shep, auxp, resp, engpa, weapa, shepa, auxpa, respa
     while True:
         cls()
-        lines = []
-        engpa = ''
-        weapa = ''
-        shepa = ''
-        auxpa = ''
         power_display()
-        lines.append('USS Starflight')
-        lines.append('')
-        lines.append('')
-        lines.append('Power Levels:')
-        lines.append('Engines:   %s' % engpa)
-        lines.append('Weapons:   %s' % weapa)
-        lines.append('Shields:   %s' % shepa)
-        lines.append('Auxiliary: %s' % auxpa)
-        lines.append('Reserve  : %s' % respa)
-        lines.append('')
-        lines.append('1: Increase power to Engines')
-        lines.append('2: Increase power to Engines')
-        lines.append('3: Increase power to Weapons')
-        lines.append('4: Increase power to Weapons')
-        lines.append('5: Increase power to Shields')
-        lines.append('6: Increase power to Shields')
-        lines.append('7: Increase power to Auxiliary')
-        lines.append('8: Increase power to Auxiliary')
-        lines.append('9: Exit menu')
-        c = print_menu(lines, 1, 8)
+        print('USS Starflight')
+        print('')
+        print('')
+        print('Power Levels:')
+        print('Engines:   %s' % engpa)
+        print('Weapons:   %s' % weapa)
+        print('Shields:   %s' % shepa)
+        print('Auxiliary: %s' % auxpa)
+        print('Reserve  : %s' % respa)
+        print('')
+        print('1: Increase power to Engines')
+        print('2: Increase power to Engines')
+        print('3: Increase power to Weapons')
+        print('4: Increase power to Weapons')
+        print('5: Increase power to Shields')
+        print('6: Increase power to Shields')
+        print('7: Increase power to Auxiliary')
+        print('8: Increase power to Auxiliary')
+        print('9: Exit menu')
+        c = int(msvcrt.getch())
         if c is 1:
             if resp > 0:
                 engp += 1
@@ -162,7 +176,7 @@ def powerMenu():
                 resp += 1
                 auxp -= 1
         elif c is 9:
-            return True
+            return
 
 
 mainMenu()
