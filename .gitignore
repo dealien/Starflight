@@ -57,9 +57,10 @@ docs/_build/
 # PyBuilder
 target/
 
-# Sublime Text project files
+# Editor files
 *.sublime-project
 *.sublime-workspace
+.idea/
 
 # Self-generated files
 logs/
