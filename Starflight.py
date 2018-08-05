@@ -27,21 +27,6 @@ def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def print_menu(lines, min_value, max_value):
-    value = None
-    while value is None:
-        cls()
-        for line in lines:
-            print(line)
-        try:
-            value = int(msvcrt.getch())
-            if value < min_value or value > max_value:
-                value = None
-        except ValueError:
-            print('Please input a number')
-    return value
-
-
 class Power:
     def __init__(self, **kwargs):
         self.engines = 3
