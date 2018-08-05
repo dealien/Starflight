@@ -3,11 +3,8 @@ import os
 from datetime import datetime
 from pprint import pformat
 
-hull = 100
-shld = 100
 
-
-def createFolder(directory):
+def createfolder(directory):
     try:
         if not os.path.exists(directory):
             os.makedirs(directory)
@@ -16,14 +13,13 @@ def createFolder(directory):
 
 
 def log(c):
-    global logfilename
+    logfilename = './logs/' + datetime.now().strftime('log_%H_%M_%d_%m_%Y.log')
     f = open(logfilename, 'a')
     f.write(str(c) + '\n')
     f.close()
 
 
-createFolder('./logs/')
-logfilename = './logs/' + datetime.now().strftime('log_%H_%M_%d_%m_%Y.log')
+createfolder('./logs/')
 log('Log beginning ' + str(datetime.now()))
 
 
@@ -59,7 +55,7 @@ class Ship:
     """Ship objects contain information about a ship,
     whether it's the player, an enemy, or an NPC."""
 
-    def __init__(self, name=None, owner=None, **kwargs):
+    def __init__(self, name, owner, **kwargs):
         self.name = str(name)
         self.model = None
         self.owner = str(owner)
@@ -75,8 +71,7 @@ class Ship:
             self.shldstatus = 'Raised'
 
 
-def mainMenu():
-    global engpa, weapa, shepa, auxpa, respa
+def mainmenu():
     log('Switched to main menu')
     log('Player ship status: ' + pformat(pShip))
     while True:
@@ -86,8 +81,8 @@ def mainMenu():
         print('')
         print('')
         print('Ship Status:')
-        print('Hull:      %s%%' % hull)
-        print('Shields:   %s%% (%s)' % (shld, shldstatus))
+        print('Hull:      %s%%' % pShip.hull)
+        print('Shields:   %s%% (%s)' % (pShip.shields, pShip.shieldstatus))
         print('')
         print('Power Levels:')
         print('Engines   : %s' % engpa)
@@ -114,7 +109,7 @@ def mainMenu():
         except ValueError:
             pass
         if c is 1:
-            powerMenu()
+            powermenu()
         elif c is 2 and pShip.shldstatus is not 'Disabled':
             pShip.toggle_shields()
 
@@ -138,7 +133,7 @@ def power_display():
     return engpa, weapa, shepa, auxpa, respa
 
 
-def powerMenu():
+def powermenu():
     log('Switched to power management menu')
     log('Player ship status: ' + pformat(pShip))
     while True:
@@ -213,4 +208,4 @@ def powerMenu():
 
 p = Power()
 pShip = Ship('USS Starflight', 'Player', power=p)
-mainMenu()
+mainmenu()
