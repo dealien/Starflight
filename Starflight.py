@@ -70,13 +70,31 @@ class Ship:
         else:
             self.shieldstatus = 'Raised'
 
+    def power_display(self):
+        engpa = ''
+        weapa = ''
+        shepa = ''
+        auxpa = ''
+        respa = ''
+        for i in range(pShip.power.engines):
+            engpa += '■'
+        for i in range(pShip.power.weapons):
+            weapa += '■'
+        for i in range(pShip.power.shields):
+            shepa += '■'
+        for i in range(pShip.power.auxiliary):
+            auxpa += '■'
+        for i in range(pShip.power.reserve):
+            respa += '■'
+        return engpa, weapa, shepa, auxpa, respa
+
 
 def mainmenu():
     log('Switched to main menu')
     log('Player ship status: ' + pformat(pShip))
     while True:
         cls()
-        engpa, weapa, shepa, auxpa, respa = power_display()
+        engpa, weapa, shepa, auxpa, respa = pShip.power_display()
         print(pShip.name + ' - Main Menu')
         print('')
         print('')
@@ -114,31 +132,12 @@ def mainmenu():
             pShip.toggle_shields()
 
 
-def power_display():
-    engpa = ''
-    weapa = ''
-    shepa = ''
-    auxpa = ''
-    respa = ''
-    for i in range(pShip.power.engines):
-        engpa += '■'
-    for i in range(pShip.power.weapons):
-        weapa += '■'
-    for i in range(pShip.power.shields):
-        shepa += '■'
-    for i in range(pShip.power.auxiliary):
-        auxpa += '■'
-    for i in range(pShip.power.reserve):
-        respa += '■'
-    return engpa, weapa, shepa, auxpa, respa
-
-
 def powermenu():
     log('Switched to power management menu')
     log('Player ship status: ' + pformat(pShip))
     while True:
         cls()
-        engpa, weapa, shepa, auxpa, respa = power_display()
+        engpa, weapa, shepa, auxpa, respa = pShip.power_display()
         print(pShip.name + ' - Power Management')
         print('')
         print('')
