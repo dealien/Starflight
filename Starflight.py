@@ -5,7 +5,6 @@ from pprint import pformat
 
 hull = 100
 shld = 100
-shldstatus = 'Lowered'
 
 
 def createFolder(directory):
@@ -67,6 +66,13 @@ class Ship:
         self.hull = 100
         self.shields = 100
         self.power = Power()
+        self.shieldstatus = 'Lowered'
+
+    def toggle_shields(self):
+        if self.shldstatus is 'Raised':
+            self.shldstatus = 'Lowered'
+        else:
+            self.shldstatus = 'Raised'
 
 
 def mainMenu():
@@ -94,8 +100,8 @@ def mainMenu():
         print('')
         print('')
         print('1: Power settings')
-        if shldstatus is not 'Disabled':
-            if shldstatus is 'Raised':
+        if pShip.shieldstatus is not 'Disabled':
+            if pShip.shieldstatus is 'Raised':
                 i = 'Lower'
             else:
                 i = 'Raise'
@@ -109,8 +115,8 @@ def mainMenu():
             pass
         if c is 1:
             powerMenu()
-        elif c is 2 and shldstatus is not 'Disabled':
-            toggle_shields()
+        elif c is 2 and pShip.shldstatus is not 'Disabled':
+            pShip.toggle_shields()
 
 
 def power_display():
@@ -130,14 +136,6 @@ def power_display():
     for i in range(pShip.power.reserve):
         respa += '■'
     return engpa, weapa, shepa, auxpa, respa
-
-
-def toggle_shields():
-    global shldstatus
-    if shldstatus is 'Raised':
-        shldstatus = 'Lowered'
-    else:
-        shldstatus = 'Raised'
 
 
 def powerMenu():
