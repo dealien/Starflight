@@ -6,11 +6,6 @@ from pprint import pformat
 hull = 100
 shld = 100
 shldstatus = 'Lowered'
-engpa = ''
-weapa = ''
-shepa = ''
-auxpa = ''
-respa = ''
 
 
 def createFolder(directory):
@@ -80,7 +75,7 @@ def mainMenu():
     log('Player ship status: ' + pformat(pShip))
     while True:
         cls()
-        power_display()
+        engpa, weapa, shepa, auxpa, respa = power_display()
         print(pShip.name + ' - Main Menu')
         print('')
         print('')
@@ -109,8 +104,7 @@ def mainMenu():
 
         c = 0
         try:
-            # c = int(msvcrt.getch())
-            c = int(input())
+            c = int(msvcrt.getch())
         except ValueError:
             pass
         if c is 1:
@@ -120,7 +114,6 @@ def mainMenu():
 
 
 def power_display():
-    global engpa, weapa, shepa, auxpa, respa
     engpa = ''
     weapa = ''
     shepa = ''
@@ -136,6 +129,7 @@ def power_display():
         auxpa += '■'
     for i in range(pShip.power.reserve):
         respa += '■'
+    return engpa, weapa, shepa, auxpa, respa
 
 
 def toggle_shields():
@@ -149,10 +143,9 @@ def toggle_shields():
 def powerMenu():
     log('Switched to power management menu')
     log('Player ship status: ' + pformat(pShip))
-    global engpa, weapa, shepa, auxpa, respa
     while True:
         cls()
-        power_display()
+        engpa, weapa, shepa, auxpa, respa = power_display()
         print(pShip.name + ' - Power Management')
         print('')
         print('')
@@ -180,8 +173,7 @@ def powerMenu():
 
         c = 0
         try:
-            # c = int(msvcrt.getch())
-            c = int(input())
+            c = int(msvcrt.getch())
         except ValueError:
             pass
 
