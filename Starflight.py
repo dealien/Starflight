@@ -65,10 +65,10 @@ class Ship:
         self.shieldstatus = 'Lowered'
 
     def toggle_shields(self):
-        if self.shldstatus is 'Raised':
-            self.shldstatus = 'Lowered'
+        if self.shieldstatus is 'Raised':
+            self.shieldstatus = 'Lowered'
         else:
-            self.shldstatus = 'Raised'
+            self.shieldstatus = 'Raised'
 
 
 def mainmenu():
@@ -110,7 +110,7 @@ def mainmenu():
             pass
         if c is 1:
             powermenu()
-        elif c is 2 and pShip.shldstatus is not 'Disabled':
+        elif c is 2 and pShip.shieldstatus is not 'Disabled':
             pShip.toggle_shields()
 
 
