@@ -230,10 +230,5 @@ def powermenu():
             return
 
 
-p = Power()
-pship = Ship('USS Starflight', 'Player', power=p)
-print(pship.dump)
-save_game(username, pship.dump)
-load_game(username)
-print(pship.dump)
+pship = Ship('USS Starflight', 'Player', power=Power())
 mainmenu()
