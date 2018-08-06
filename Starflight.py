@@ -2,7 +2,7 @@ import json
 import msvcrt
 import os
 from datetime import datetime
-from pprint import pformat
+from pprint import pformat, pprint
 
 username = 'USS Starflight'
 
@@ -32,15 +32,6 @@ def cls():
     print('\n' * 20)
 
 
-class Power:
-    def __init__(self, **kwargs):
-        self.engines = 3
-        self.weapons = 3
-        self.shields = 3
-        self.auxiliary = 3
-        self.reserve = 3
-
-
 class Ship:
     """Ship objects contain information about a ship,
     whether it's the player, an enemy, or an NPC."""
@@ -51,7 +42,13 @@ class Ship:
         self.owner = str(owner)
         self.hull = 100
         self.shields = 100
-        self.power = Power()
+        self.power = {
+            'engines': 3,
+            'weapons': 3,
+            'shields': 3,
+            'auxiliary': 3,
+            'reserve': 3
+        }
         self.shieldstatus = 'Lowered'
 
     def toggle_shields(self):
@@ -66,15 +63,15 @@ class Ship:
         shepa = ''
         auxpa = ''
         respa = ''
-        for i in range(pship.power.engines):
+        for i in range(pship.power['engines']):
             engpa += '■'
-        for i in range(pship.power.weapons):
+        for i in range(pship.power['weapons']):
             weapa += '■'
-        for i in range(pship.power.shields):
+        for i in range(pship.power['shields']):
             shepa += '■'
-        for i in range(pship.power.auxiliary):
+        for i in range(pship.power['auxiliary']):
             auxpa += '■'
-        for i in range(pship.power.reserve):
+        for i in range(pship.power['reserve']):
             respa += '■'
         return engpa, weapa, shepa, auxpa, respa
 
@@ -86,7 +83,7 @@ class Ship:
             'owner': self.owner,
             'hull': self.hull,
             'shields': self.shields,
-            'power': self.power.__dict__,
+            'power': self.power,
             'shieldstatus': self.shieldstatus
         }
 
@@ -127,7 +124,7 @@ def load_game(name):
 
 def shipmenu():
     log('Switched to ship menu')
-    log('Player ship status: ' + pformat(pship.dump))
+    log('Player ship status: ' + pformat(pship.__dict__))
     while True:
         cls()
         engpa, weapa, shepa, auxpa, respa = pship.power_display()
@@ -169,7 +166,7 @@ def shipmenu():
 
 def powermenu():
     log('Switched to power management menu')
-    log('Player ship status: ' + pformat(pship.dump))
+    log('Player ship status: ' + pformat(pship.__dict__))
     while True:
         cls()
         engpa, weapa, shepa, auxpa, respa = pship.power_display()
@@ -205,44 +202,44 @@ def powermenu():
             pass
 
         if c is 1:
-            if pship.power.reserve > 0:
-                pship.power.engines += 1
-                pship.power.reserve -= 1
+            if pship.power['reserve'] > 0:
+                pship.power['engines'] += 1
+                pship.power['reserve'] -= 1
         elif c is 5:
-            if pship.power.engines > 0:
-                pship.power.reserve += 1
-                pship.power.engines -= 1
+            if pship.power['engines'] > 0:
+                pship.power['reserve'] += 1
+                pship.power['engines'] -= 1
         elif c is 2:
-            if pship.power.reserve > 0:
-                pship.power.weapons += 1
-                pship.power.reserve -= 1
+            if pship.power['reserve'] > 0:
+                pship.power['weapons'] += 1
+                pship.power['reserve'] -= 1
         elif c is 6:
-            if pship.power.weapons > 0:
-                pship.power.reserve += 1
-                pship.power.weapons -= 1
+            if pship.power['weapons'] > 0:
+                pship.power['reserve'] += 1
+                pship.power['weapons'] -= 1
         elif c is 3:
-            if pship.power.reserve > 0:
-                pship.power.shields += 1
-                pship.power.reserve -= 1
+            if pship.power['reserve'] > 0:
+                pship.power['shields'] += 1
+                pship.power['reserve'] -= 1
         elif c is 7:
-            if pship.power.shields > 0:
-                pship.power.reserve += 1
-                pship.power.shields -= 1
+            if pship.power['shields'] > 0:
+                pship.power['reserve'] += 1
+                pship.power['shields'] -= 1
         elif c is 4:
-            if pship.power.reserve > 0:
-                pship.power.auxiliary += 1
-                pship.power.reserve -= 1
+            if pship.power['reserve'] > 0:
+                pship.power['auxiliary'] += 1
+                pship.power['reserve'] -= 1
         elif c is 8:
-            if pship.power.auxiliary > 0:
-                pship.power.reserve += 1
-                pship.power.auxiliary -= 1
+            if pship.power['auxiliary'] > 0:
+                pship.power['reserve'] += 1
+                pship.power['auxiliary'] -= 1
         elif c is 9:
             return
 
 
 def stationmenu(locname):
     log('Switched to station menu')
-    log('Player ship status: ' + pformat(pship.dump))
+    log('Player ship status: ' + pformat(pship.__dict__))
     while True:
         cls()
         print(locname + ' - Station Menu')
@@ -282,5 +279,6 @@ def stationmenu(locname):
             pass
 
 
-pship = Ship(username, 'Player', power=Power())
+pship = Ship(username, 'Player')
+pprint(pship.__dict__)
 stationmenu('Ikanam Orbital Hub')
