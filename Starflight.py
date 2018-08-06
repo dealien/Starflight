@@ -5,6 +5,7 @@ from datetime import datetime
 from pprint import pformat, pprint
 
 username = 'USS Starflight'
+logfilename = './logs/' + datetime.now().strftime('log_%H_%M_%d_%m_%Y.log')
 
 
 def createfolder(directory):
@@ -16,7 +17,6 @@ def createfolder(directory):
 
 
 def log(c):
-    logfilename = './logs/' + datetime.now().strftime('log_%H_%M_%d_%m_%Y.log')
     f = open(logfilename, 'a')
     f.write(str(c) + '\n')
     f.close()
