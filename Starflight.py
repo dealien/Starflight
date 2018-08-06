@@ -1,7 +1,10 @@
+import json
 import msvcrt
 import os
 from datetime import datetime
 from pprint import pformat
+
+username = 'USS Starflight'
 
 
 def createfolder(directory):
@@ -20,11 +23,13 @@ def log(c):
 
 
 createfolder('./logs/')
+createfolder('./saves/')
 log('Log beginning ' + str(datetime.now()))
 
 
 def cls():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    # os.system('cls' if os.name == 'nt' else 'clear')
+    print('\n' * 20)
 
 
 class Power:
@@ -72,6 +77,42 @@ class Ship:
         for i in range(pShip.power.reserve):
             respa += '■'
         return engpa, weapa, shepa, auxpa, respa
+
+    @property
+    def dump(self):
+        return {
+            'name': self.name,
+            'model': self.model,
+            'owner': self.owner,
+            'hull': self.hull,
+            'shields': self.shields,
+            'power': self.power.__dict__,
+            'shieldstatus': self.shieldstatus
+        }
+
+    def load(self, data):
+        self.name = data['name']
+        self.model = data['model']
+        self.owner = data['owner']
+        self.hull = data['hull']
+        self.shields = data['shields']
+        self.power.engines = 3
+        self.power.weapons = 3
+        self.power.shields = 3
+        self.power.auxiliary = 3
+        self.power.reserve = 3
+        self.shieldstatus = data['shieldstatus']
+
+
+def save_game(name, data):
+    with open('saves/' + name + '.txt', 'w') as outfile:
+        json.dump(data, outfile)
+
+
+def load_game(name):
+    with open('saves/' + name + '.txt') as json_file:
+        data = json.load(json_file)
+        pShip.load(data)
 
 
 def mainmenu():
@@ -192,4 +233,8 @@ def powermenu():
 
 p = Power()
 pShip = Ship('USS Starflight', 'Player', power=p)
+print(pShip.dump)
+save_game(username, pShip.dump)
+load_game(username)
+print(pShip.dump)
 mainmenu()
