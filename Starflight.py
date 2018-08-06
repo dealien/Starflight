@@ -117,7 +117,7 @@ def load_game(name):
 
 def mainmenu():
     log('Switched to main menu')
-    log('Player ship status: ' + pformat(pship))
+    log('Player ship status: ' + pformat(pship.dump))
     while True:
         cls()
         engpa, weapa, shepa, auxpa, respa = pship.power_display()
@@ -159,7 +159,7 @@ def mainmenu():
 
 def powermenu():
     log('Switched to power management menu')
-    log('Player ship status: ' + pformat(pship))
+    log('Player ship status: ' + pformat(pship.dump))
     while True:
         cls()
         engpa, weapa, shepa, auxpa, respa = pship.power_display()
