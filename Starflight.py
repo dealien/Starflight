@@ -104,6 +104,16 @@ class Ship:
         self.shieldstatus = data['shieldstatus']
 
 
+class Captain:
+    """Ship objects contain information about a person,
+    whether it's the player, an enemy, or an NPC."""
+
+    def __init__(self, name, **kwargs):
+        self.name = name
+        self.credits = None
+        self.reputation = {}
+
+
 def save_game(name, data):
     with open('saves/' + name + '.txt', 'w') as outfile:
         json.dump(data, outfile, indent=4)
