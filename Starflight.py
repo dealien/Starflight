@@ -145,7 +145,6 @@ def mainmenu():
             else:
                 i = 'Raise'
             print('2: %s shields' % i)
-        # TODO: Add ValueError catch to handle non-numeric keypresses
 
         c = 0
         try:
