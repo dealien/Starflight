@@ -5,7 +5,7 @@ from datetime import datetime
 from pprint import pformat, pprint
 
 username = 'USS Starflight'
-logfilename = './logs/' + datetime.now().strftime('log_%H_%M_%d_%m_%Y.log')
+logfilename = 'logs/' + datetime.now().strftime('log_%H_%M_%d_%m_%Y.log')
 
 
 def createfolder(directory):
@@ -20,10 +20,15 @@ def log(c):
     f = open(logfilename, 'a')
     f.write(str(c) + '\n')
     f.close()
+    f = open('logs/latest.log', 'a')
+    f.write(str(c) + '\n')
+    f.close()
 
 
 createfolder('./logs/')
 createfolder('./saves/')
+if os.path.exists('logs/latest.log'):
+    os.remove('logs/latest.log')
 log('Log beginning ' + str(datetime.now()))
 
 
@@ -124,7 +129,7 @@ def load_game(name):
 
 def shipmenu():
     log('Switched to ship menu')
-    log('Player ship status: ' + pformat(pship.__dict__))
+    log('Player ship status: \n' + pformat(pship.__dict__))
     while True:
         cls()
         engpa, weapa, shepa, auxpa, respa = pship.power_display()
@@ -166,7 +171,7 @@ def shipmenu():
 
 def powermenu():
     log('Switched to power management menu')
-    log('Player ship status: ' + pformat(pship.__dict__))
+    log('Player ship status: \n' + pformat(pship.__dict__))
     while True:
         cls()
         engpa, weapa, shepa, auxpa, respa = pship.power_display()
@@ -239,7 +244,7 @@ def powermenu():
 
 def stationmenu(locname):
     log('Switched to station menu')
-    log('Player ship status: ' + pformat(pship.__dict__))
+    log('Player ship status: \n' + pformat(pship.__dict__))
     while True:
         cls()
         print(locname + ' - Station Menu')
