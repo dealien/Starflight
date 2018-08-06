@@ -106,7 +106,7 @@ class Ship:
 
 def save_game(name, data):
     with open('saves/' + name + '.txt', 'w') as outfile:
-        json.dump(data, outfile)
+        json.dump(data, outfile, indent=4)
 
 
 def load_game(name):
@@ -115,8 +115,8 @@ def load_game(name):
         pship.load(data)
 
 
-def mainmenu():
-    log('Switched to main menu')
+def shipmenu():
+    log('Switched to ship menu')
     log('Player ship status: ' + pformat(pship.dump))
     while True:
         cls()
@@ -125,8 +125,8 @@ def mainmenu():
         print('')
         print('')
         print('Ship Status:')
-        print('Hull:      %s%%' % pship.hull)
-        print('Shields:   %s%% (%s)' % (pship.shields, pship.shieldstatus))
+        print('Hull      : %s%%' % pship.hull)
+        print('Shields   : %s%% (%s)' % (pship.shields, pship.shieldstatus))
         print('')
         print('Power Levels:')
         print('Engines   : %s' % engpa)
@@ -230,5 +230,47 @@ def powermenu():
             return
 
 
-pship = Ship('USS Starflight', 'Player', power=Power())
-mainmenu()
+def stationmenu(locname):
+    log('Switched to station menu')
+    log('Player ship status: ' + pformat(pship.dump))
+    while True:
+        cls()
+        print(locname + ' - Station Menu')
+        print('')
+        print('')
+        print('Player Status:')
+        print('Credits               : %s' % None)
+        print('Local Reputation      : %s' % None)
+        print('')
+        print('Current Station:')
+        print('Name                  : %s' % None)
+        print('System                : %s' % None)
+        print('Controlling Faction   : %s' % None)
+        print('Features              : %s' % None)
+        print('')
+        print('Available Missions    : %s' % None)
+        print('')
+        print('')
+        print('')
+        print('1: Captain menu')
+        print('2: Ship manager')
+        print('3: Trading')
+        print('4: Missions')
+
+        c = 0
+        try:
+            c = int(msvcrt.getch())
+        except ValueError:
+            pass
+        if c is 1:
+            captainmenu()
+        elif c is 2:
+            shipmenu()
+        elif c is 3:
+            pass
+        elif c is 4:
+            pass
+
+
+pship = Ship(username, 'Player', power=Power())
+stationmenu('Ikanam Orbital Hub')
