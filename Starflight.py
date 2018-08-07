@@ -174,7 +174,6 @@ def shipmenu():
 
 def powermenu():
     log('Switched to power management menu')
-    log('Player ship status: \n' + pformat(pship.__dict__))
     while True:
         cls()
         engpa, weapa, shepa, auxpa, respa = pship.power_display()
@@ -247,7 +246,6 @@ def powermenu():
 
 def stationmenu(locname):
     log('Switched to station menu')
-    log('Player ship status: \n' + pformat(pship.__dict__))
     while True:
         cls()
         print(locname + ' - Station Menu')
@@ -285,6 +283,33 @@ def stationmenu(locname):
             pass
         elif c is 4:
             pass
+
+
+def captainmenu():
+    log('Switched to captain menu')
+    while True:
+        cls()
+        print(pship.name + ' - Captain Menu')
+        print('')
+        print('')
+        print('Player Status:')
+        print('Credits      : %s' % None)
+        print('Faction      : %s' % None)
+        print('')
+        print('')
+        print('')
+        print('1: Bank account')
+        print('2: Exit menu')
+
+        c = 0
+        try:
+            c = int(msvcrt.getch())
+        except ValueError:
+            pass
+        if c is 1:
+            pass
+        elif c is 2:
+            return
 
 
 pship = Ship(username, 'Player')
