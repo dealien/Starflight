@@ -157,6 +157,7 @@ def shipmenu():
             else:
                 i = 'Raise'
             print('2: %s shields' % i)
+        print('3: Exit menu')
 
         c = 0
         try:
@@ -167,6 +168,8 @@ def shipmenu():
             powermenu()
         elif c is 2 and pship.shieldstatus is not 'Disabled':
             pship.toggle_shields()
+        elif c is 3:
+            return
 
 
 def powermenu():
